@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	h1 Create a new cat!
+
+	form(method='post', action='/cats', id="newform")
+		| New cat's name:
+			input(name='todo', id="newinput")
+				button('type='submit')
+					| Done

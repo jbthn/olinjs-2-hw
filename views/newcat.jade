@@ -1,10 +1,13 @@
 extends layout
 
 block content
-	h1 Create a new cat!
+	h1 = title
 
 	form(method='post', action='/cats', id="newform")
 		| New cat's name:
-			input(name='todo', id="newinput")
-				button('type='submit')
-					| Done
+		input(type='text', name='name')
+		| New cat's age:
+		input(type='text', name='age')
+		|New cat's colors:
+		input(type='text', name='cols')
+		input(type='submit', value='Create cat')

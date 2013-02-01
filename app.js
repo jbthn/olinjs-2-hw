@@ -6,7 +6,6 @@
 var express = require('express')
   , mongoose = require('mongoose')
   , routes = require('./routes')
-  , cats = require('./routes/cats')
   , http = require('http')
   , path = require('path');
 
@@ -17,7 +16,7 @@ app.configure('development', function(){
 });
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 8080);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -28,15 +27,9 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
-app.get('/', routes.index);
-app.get('/cats', cats.cats);
-app.get('/cats/new', cats.add);
-app.get('/cats/color/:col', cats.color);
-app.get('/cats/delete/old', cats.del);
-
 var catSchema = new mongoose.Schema({
   name: String,
-  colors: [String],
+  colors: String,
   age: { type: Number, min: 0 }
 });
 
@@ -61,13 +54,15 @@ mongoose.connect(uristring, mongoOptions, function (err, res) {
   }
 });
 
+var cats = require('./routes/cats');
+app.get('/', routes.index);
+app.get('/cats', cats.cats);
+app.get('/cats/new', cats.new);
+app.get('/cats/color/:col', cats.color);
+app.get('/cats/delete/old', cats.del);
+app.post('/cats', cats.add);
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-// var test = new Cat ({
-//   name: 'test',
-//   age: 65,
-//   colors: ['brown', 'black']
-// });
-// test.save(function (err) {if (err) console.log ('Error on save!')});

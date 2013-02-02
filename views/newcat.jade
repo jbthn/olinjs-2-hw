@@ -1,13 +1,18 @@
 extends layout
 
 block content
-	h1 = title
+	h1 #{title}
 
 	form(method='post', action='/cats', id="newform")
 		| New cat's name:
 		input(type='text', name='name')
+		&nbsp;
 		| New cat's age:
-		input(type='text', name='age')
+		select(name='age')
+			for i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+				option(value=i) #{i}
+		br
 		|New cat's colors:
-		input(type='text', name='cols')
+		input(type='text', name='colors')
+		br
 		input(type='submit', value='Create cat')

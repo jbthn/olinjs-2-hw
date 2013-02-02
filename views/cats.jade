@@ -1,6 +1,22 @@
 extends layout
 
 block content
-	h1 = title
+	h1 #{title}
 
-	p #{db}
+	-if(cats.length>0)
+		table(cellpadding = 3)
+			tr
+				td <b> Cat Name
+				td <b> Age
+				td <b> Colors
+			each cat in cats
+				-var c = String(cat.colors).replace(/,/g,', ')
+				tr
+					td #{cat.name}
+					td #{cat.age}
+					td #{c}
+	-else
+		p No #{color} cats to display. Please visit 
+			a(href = '/cats/new')
+				| this page
+			|  if you'd like to create a #{color} cat.
